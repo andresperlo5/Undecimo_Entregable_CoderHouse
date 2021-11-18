@@ -1,0 +1,43 @@
+<div>
+    <h1 class="text-center">Centro de Mesajes (Compresion de mensajes: <%- data %> %)</h1>
+    <form id='botonId' action="/api/productos-test/postmessage" method="POST">
+        <div class="mb-3">
+            <input type="email" class="form-control" name='author.id' id="email" aria-describedby="emailHelp"
+                placeholder="Coloque su Email">
+        </div>
+        <div class="mb-3">
+            <input type="text" class="form-control" name='author.name' id="name" aria-describedby="emailHelp"
+                placeholder="Coloque su Nombre/s">
+        </div>
+        <div class="mb-3">
+            <input type="text" class="form-control" name='author.lastname' id="lastname" aria-describedby="emailHelp"
+                placeholder="Coloque su Apellido/s">
+        </div>
+        <div class="mb-3">
+            <input type="number" class="form-control" name='author.age' id="age" aria-describedby="emailHelp"
+                placeholder="Coloque su Edad">
+        </div>
+        <div class="mb-3">
+            <input type="text" class="form-control" name='author.alias' id="alias" aria-describedby="emailHelp"
+                placeholder="Coloque su alias">
+        </div>
+        <div class="mb-3">
+            <input type="url" class="form-control" name='author.avatar' id="avatar" aria-describedby="emailHelp"
+                placeholder="Coloque la URL de su avatar">
+        </div>
+        <div class="mb-3">
+            <input type="text" class="form-control" name='text' id="msg" aria-describedby="emailHelp"
+                placeholder="Coloque su Mensaje">
+        </div>
+
+        <div class="mb-3" id="chats">
+            <% message.forEach(function(i){ %>
+                <div class='d-flex'>
+                    <p><%= i.author.id%></p>: <p> <%= i.text%></p><img src="<%= i.author.avatar%>" alt="" class='avatarimg'>
+                </div>
+                <% }) %>
+        </div>
+        <button type="submit" class="btn btn-dark m-3">Enviar</button>
+    </form>
+</div>
+</main>

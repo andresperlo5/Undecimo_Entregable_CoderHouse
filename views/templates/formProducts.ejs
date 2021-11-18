@@ -1,0 +1,21 @@
+<div>
+    <h3 class="text-center">Ingrese un Producto</h3>
+    <form onsubmit="return addTrTable()">
+        <div>
+            <div class="mb-3">
+                <label for="exampleInputEmail1" class="form-label">Titulo</label>
+                <input type="text" class="form-control" name='title' id="title" aria-describedby="emailHelp" required>
+            </div>
+            <div class="mb-3">
+                <label for="exampleInputPassword1" class="form-label">Precio</label>
+                <input type="number" class="form-control" name='price' id="price" required>
+            </div>
+            <div class="mb-3">
+                <label for="exampleInputPassword1" class="form-label">Imagen URL</label>
+                <input type="url" class="form-control" name='thumbnail' id="thumbnail" required>
+            </div>
+            <button type="submit" class="btn btn-dark m-3">Enviar</button>
+        </div>
+
+    </form>
+</div>

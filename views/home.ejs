@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<%- include('templates/head', {}) %>
+
+    <body>
+        <%- include('templates/navbar', {}) %>
+            <main>
+                <%- include('templates/formProducts')%>
+                    <%- include('templates/tableProducts', {}) %>
+                        <%- include('templates/formChats', {}) %>
+
+                            <script src="/socket.io/socket.io.js"></script>
+                            <script>
+
+                                console.log('message', message)
+                                const socket = io();
+
+                                socket.on("message_back", (data) => {
+                                    console.log(data);
+                                    render(data);
+
+                                    socket.emit("message_client", "Hola servidor!");
+                                });
+
+                                socket.on("message_back_table", (data) => {
+                                    console.log(data);
+                                    renderTable(data);
+                                    socket.emit("message_client_table", "Hola servidor!");
+                                });
+
+                                const render = (data) => {
+                                    console.log('dataHome', data)
+                                    let html = data
+                                        .map((x) => {
+                                            return `
+                                                <p class='m-0 pnm'><strong>${x.id}</strong> : ${x.msg}</p>
+                                                
+                                            `
+                                        })
+                                        .join(" ");
+
+                                    document.querySelector("#chats").innerHTML = html;
+
+                                };
+
+                                const renderTable = (data) => {
+                                    let tr = data
+                                        .map((i) => {
+                                            return `
+                                                <tr>
+                                                    <th scope="row">${i.id}</th>
+                                                    <td>${i.title}</td>
+                                                    <td>${i.price}</td>
+                                                    <td>
+                                                        <img src="${i.thumbnail}" alt="" style='width: 2rem; heigth: 5vh'>
+                                                    </td>
+                                                </tr>
+                                                `
+                                        })
+                                        .join(" ");
+
+                                    document.querySelector("#idTbody").innerHTML = tr;
+                                };
+
+                                document.getElementById('botonId').addEventListener('submit', (e) => {
+                                    e.preventDefault()
+                                    let obj = {
+
+                                        id: document.querySelector("#email").value,
+                                        name: document.querySelector("#name").value,
+                                        lastname: document.querySelector("#lastname").value,
+                                        age: document.querySelector("#age").value,
+                                        alias: document.querySelector("#alias").value,
+                                        avatar: document.querySelector("#avatar").value,
+                                        msg: document.querySelector("#msg").value
+                                    }
+                                    socket.emit("data_client", obj)
+
+                                    document.querySelector("#email").value = '';
+                                    document.querySelector("#name").value = '';
+                                    document.querySelector("#lastname").value = '';
+                                    document.querySelector("#age").value = '';
+                                    document.querySelector("#alias").value = '';
+                                    document.querySelector("#avatar").value = '';
+                                    document.querySelector("#msg").value = ""
+                                    return false
+                                })
+
+                             /*    const addMsn = () => {
+
+                                } */
+
+                                const addTrTable = () => {
+
+                                    let obj = {
+                                        id: 1,
+                                        title: document.querySelector("#title").value,
+                                        price: document.querySelector("#price").value,
+                                        thumbnail: document.querySelector("#thumbnail").value
+                                    }
+                                    socket.emit("data_client_table", obj)
+
+                                    document.querySelector("#title").value = "";
+                                    document.querySelector("#price").value = "";
+                                    document.querySelector("#thumbnail").value = ""
+                                    return false
+                                }
+                            </script>
+
+                            <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
+                                integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
+                                crossorigin="anonymous"></script>
+    </body>
+
+</html>
